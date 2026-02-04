@@ -220,6 +220,9 @@ btnYes.addEventListener('click', (e) => {
 
 // Show celebration
 function showCelebration() {
+    // Hide the No button
+    btnNo.style.display = 'none';
+    
     celebration.classList.add('active');
     
     // Create confetti
