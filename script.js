@@ -117,45 +117,78 @@ function runAwayNoButton() {
 }
 
 function moveToRandomPosition() {
-    // Get viewport dimensions with padding
-    const padding = 50;
-    const btnWidth = 100; // Approximate width
-    const btnHeight = 40; // Approximate height
-    const maxX = window.innerWidth - btnWidth - padding;
-    const maxY = window.innerHeight - btnHeight - padding;
+    // Get actual button dimensions
+    const btnRect = btnNo.getBoundingClientRect();
+    const btnWidth = btnRect.width || 100;
+    const btnHeight = btnRect.height || 40;
     
-    // Generate random position
-    const randomX = padding + Math.random() * (maxX - padding);
-    const randomY = padding + Math.random() * (maxY - padding);
+    // Get viewport dimensions with safe padding for mobile
+    const padding = 20;
+    const safeTop = padding;
+    const safeBottom = window.innerHeight - btnHeight - padding;
+    const safeLeft = padding;
+    const safeRight = window.innerWidth - btnWidth - padding;
+    
+    // Generate random position within safe bounds
+    const randomX = safeLeft + Math.random() * (safeRight - safeLeft);
+    const randomY = safeTop + Math.random() * (safeBottom - safeTop);
+    
+    // Ensure values are valid
+    const finalX = Math.max(safeLeft, Math.min(randomX, safeRight));
+    const finalY = Math.max(safeTop, Math.min(randomY, safeBottom));
     
     // Move the button
-    btnNo.style.left = randomX + 'px';
-    btnNo.style.top = randomY + 'px';
+    btnNo.style.left = finalX + 'px';
+    btnNo.style.top = finalY + 'px';
     
-    // Shrink it a little each time (but keep it visible!)
-    noBtnScale = Math.max(0.6, noBtnScale - 0.05);
+    // Shrink it a little each time (but keep it visible on mobile!)
+    noBtnScale = Math.max(0.7, noBtnScale - 0.04);
     btnNo.style.transform = `scale(${noBtnScale})`;
 }
 
-// Also run away on hover for extra fun!
+// Also run away on hover for extra fun (desktop only)
 btnNo.addEventListener('mouseenter', () => {
-    if (noClickCount > 0) {
+    if (noClickCount > 0 && !isTouchDevice()) {
         runAwayNoButton();
     }
 });
 
-// Handle touch devices - run away when finger gets close
+// Handle touch devices
 btnNo.addEventListener('touchstart', (e) => {
     if (noClickCount > 0) {
         e.preventDefault();
-        runAwayNoButton();
-        // Still cycle photo on touch
-        cyclePhoto();
+        e.stopPropagation();
+        
+        // Run away and update state
         noClickCount++;
         questionScale += 0.15;
         question.style.transform = `scale(${questionScale})`;
         yesBtnScale += 0.15;
         btnYes.style.transform = `scale(${yesBtnScale})`;
+        cyclePhoto();
+        runAwayNoButton();
+    }
+}, { passive: false });
+
+// Detect touch device
+function isTouchDevice() {
+    return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+}
+
+// Handle orientation change and resize
+window.addEventListener('resize', () => {
+    // If the No button is running, make sure it's still in bounds
+    if (btnNo.classList.contains('running')) {
+        const rect = btnNo.getBoundingClientRect();
+        const padding = 20;
+        
+        // Check if button is off screen and move it back
+        if (rect.right > window.innerWidth - padding || 
+            rect.bottom > window.innerHeight - padding ||
+            rect.left < padding ||
+            rect.top < padding) {
+            moveToRandomPosition();
+        }
     }
 });
 
@@ -295,3 +328,21 @@ function showPhotoCarousel() {
 document.querySelector('.letter-content').addEventListener('click', (e) => {
     e.stopPropagation();
 });
+
+// Prevent double-tap zoom on buttons
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+    }, { passive: false });
+});
+
+// Handle Yes button on touch
+btnYes.addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+}, { passive: true });
+
+btnYes.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    showCelebration();
+}, { passive: false });
