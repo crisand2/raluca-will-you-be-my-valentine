@@ -220,8 +220,15 @@ btnYes.addEventListener('click', (e) => {
 
 // Show celebration
 function showCelebration() {
-    // Hide the No button
-    btnNo.style.display = 'none';
+    // Hide the No button completely
+    if (btnNo) {
+        btnNo.style.display = 'none';
+        btnNo.style.visibility = 'hidden';
+        btnNo.style.opacity = '0';
+        btnNo.style.pointerEvents = 'none';
+        // Remove from DOM entirely
+        btnNo.remove();
+    }
     
     celebration.classList.add('active');
     
