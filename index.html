@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question For You 💌</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Preload photos for smooth transitions -->
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28.jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (1).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (2).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (3).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (4).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (5).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (6).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (7).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (8).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (9).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.28 (10).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.29.jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.29 (1).jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.31.jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.32.jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.33.jpeg">
+    <link rel="preload" as="image" href="photos/WhatsApp Image 2026-02-04 at 09.57.34.jpeg">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background photo layer -->
+    <div class="photo-background">
+        <div class="photo-layer photo-current"></div>
+        <div class="photo-layer photo-next"></div>
+        <div class="photo-overlay"></div>
+    </div>
+
+    <!-- Floating hearts decoration -->
+    <div class="floating-hearts" aria-hidden="true">
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+        <span class="heart">♥</span>
+    </div>
+
+    <!-- Main envelope container -->
+    <main class="envelope-container">
+        <!-- The envelope -->
+        <div class="envelope" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-front"></div>
+            
+            <!-- The letter/card inside -->
+            <div class="letter" id="letter">
+                <div class="letter-content">
+                    <div class="heart-decoration top-left">♥</div>
+                    <div class="heart-decoration top-right">♥</div>
+                    
+                    <h1 class="question" id="question">Will you be my Valentine?</h1>
+                    
+                    <div class="buttons-container">
+                        <button class="btn btn-yes" id="btn-yes">Yes</button>
+                        <button class="btn btn-no" id="btn-no">No</button>
+                    </div>
+                    
+                    <div class="heart-decoration bottom-left">♥</div>
+                    <div class="heart-decoration bottom-right">♥</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Click prompt -->
+        <p class="click-prompt" id="click-prompt">Click the envelope to open</p>
+    </main>
+
+    <!-- Celebration overlay -->
+    <div class="celebration-overlay" id="celebration">
+        <div class="celebration-content">
+            <h2 class="celebration-title">I knew you'd say yes!</h2>
+            <p class="celebration-subtitle">You've made me the happiest person alive ♥</p>
+            <div class="photo-carousel" id="photo-carousel"></div>
+        </div>
+        <div class="confetti-container" id="confetti"></div>
+        <div class="hearts-explosion" id="hearts-explosion"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
